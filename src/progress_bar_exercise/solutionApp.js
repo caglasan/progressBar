@@ -18,6 +18,7 @@ class SolutionApp extends React.Component {
 
   }
 
+  // Progress to max=100 in 15 seconds
   startTimer(){
     this.timerID =       
       setInterval(()=>
@@ -26,9 +27,10 @@ class SolutionApp extends React.Component {
           this.setState({completed: this.state.completed + 1})
         else 
           clearInterval()
-      }, 200);
+      }, 150);
   }
 
+  // Progress to max=100 in 1 second.
   startTimerFast(){
     this.timerID =       
       setInterval(()=>
@@ -37,7 +39,7 @@ class SolutionApp extends React.Component {
           this.setState({completed: this.state.completed + 1})
         else 
           clearInterval()
-      }, 15);
+      }, 10);
   }
 
   stopTimer(){
@@ -48,11 +50,11 @@ class SolutionApp extends React.Component {
 
     if (btn === 0) {
       this.stopTimer()  
-      this.setState({completed: 1});      
+      this.setState({completed: 1, startClicked: 1, finishClicked: 0});      
       this.startTimer()
 
     } else if (btn === 1) {
-  
+        this.setState({completed: this.maxProgress, startClicked: 0, finishClicked: 1}); 
       // alert('Finish Clicked ...')
       this.startTimerFast()
     }
@@ -65,13 +67,14 @@ class SolutionApp extends React.Component {
     let b = 0;
     let color = "rgba(" + String(r) + ", " + String(g) + ", " + String(b) + ", 1)"
 
+    // This is to give the gradient effect based on progress
     color = 'linear-gradient(to right, rgba(255,200,0,1), ' + color + ')';
     // linear-gradient(to right, rgba(255,100,0,1), rgba(255,0,0,1));
 
     return (
       <div className='SolutionApp'>
 
-            hello 
+            Hello Spiff
 
             <ProgressBar 
             bgcolor ={color } 

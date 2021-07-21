@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React from "react";
+
 const ControlButtons = (props) => {
     const { completed, startClicked, finishClicked } = props;    
 
@@ -32,24 +33,62 @@ const ControlButtons = (props) => {
         borderRadius: 30,
         fontWeight: 'bold'
       }
+      
+      const startBtnText = startClicked? 'Loading...' : 'START REQUEST'
+      const finishBtnText = 'FINISH REQUEST'
+
+      //I would like to have a generic function here to change the borders but this is quick and dirty
+      function changeBorder(e) {
+          if (e.target.value === 'start' ) 
+            e.target.style.border = '2px solid rgba(0, 255, 0, 1)';
+          else if (e.target.value === 'finish' ) 
+            e.target.style.border = '2px solid rgba(255, 0, 0, 1)';
+        
+      }
+
+      function changeBorderBack(e) {
+        if (e.target.value === 'start' ) 
+          e.target.style.border = '1px solid rgba(0, 255, 0, 1)';
+        else if (e.target.value === 'finish' ) 
+          e.target.style.border = '1px solid rgba(255, 0, 0, 1)';
+      
+    }
+
+    function changeBorderClick(e) {
+        if (e.target.value === 'start' ) {
+          e.target.style.border = '3px solid rgba(0, 255, 0, 1)';
+          props.onClick(0)
+        }
+        else if (e.target.value === 'finish' ) {
+          e.target.style.border = '3px solid rgba(255, 0, 0, 1)';
+          props.onClick(1)
+        }
+          
+    }
 
       return (
         <div style = {styl}>
               <div style = {styl}>
                   <button 
+                    value = 'start'
                     style = {startBtnStyl}
-                    onClick={()=> props.onClick(0)} 
+                    onClick={changeBorderClick} 
+                    onMouseOver={changeBorder}
+                    onMouseLeave={changeBorderBack}
                      >
-                      START REQUEST
+                      {startBtnText}
                   </button>
               </div>
 
             <div style = {styl}>
               <button 
+                value = 'finish'
                 style = {finishBtnStyl}
-                onClick={()=> props.onClick(1)} 
+                onClick={changeBorderClick} 
+                onMouseOver={changeBorder}
+                onMouseLeave={changeBorderBack}
                 >
-                  FINISH REQUEST
+                  {finishBtnText}
               </button>
             </div>
           </div>
